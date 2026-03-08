@@ -278,3 +278,26 @@ img {
 .recipe-page-div li:hover{
     background-color: #F7F7F7;
 }
+
+.similar-recipes-div{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.similar-recipe-card{
+    width: 25%;
+    height: 30vh;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.similar-recipe-card img{
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s;
+}
+
+.similar-recipe-card img:hover{
+    transform: scale(1.04);
+}

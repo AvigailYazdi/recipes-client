@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { PopularSlide } from "./PopularSlide";
 import { IconButton } from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIos';
 
 export const PopularCarousel = (props) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -40,7 +40,7 @@ export const PopularCarousel = (props) => {
                     <ArrowForwardIosIcon />
                 </IconButton>
                 <IconButton onClick={goNext} className="nextBtn">
-                    <ArrowBackIosIcon />
+                    <ArrowBackIosNewIcon />
                 </IconButton>
             </div>
             <ul>

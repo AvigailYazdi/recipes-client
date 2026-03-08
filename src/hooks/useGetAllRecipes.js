@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
-import { getAllRecipes } from "../api/recipes-api"
+import { useQuery } from "@tanstack/react-query";
+import { getAllRecipes } from "../api/recipes-api";
 
-export const useGetAllRecipes = () =>{
-    return useQuery({
-        queryKey: ["recipes"],
-        queryFn: getAllRecipes
-    })
-}
+export const useGetAllRecipes = (filters = {}) => {
+  return useQuery({
+    queryKey: ["recipes", filters],
+    queryFn: () => getAllRecipes(filters),
+  });
+};
