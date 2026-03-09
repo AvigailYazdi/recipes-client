@@ -301,3 +301,8 @@ img {
 .similar-recipe-card img:hover{
     transform: scale(1.04);
 }
+
+.selected{
+    text-decoration: line-through;
+    opacity: 0.6;
+}
