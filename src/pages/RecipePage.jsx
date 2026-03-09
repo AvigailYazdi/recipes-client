@@ -10,6 +10,8 @@ import { IconButton } from "@mui/material";
 import { SimilarRecipes } from "../components/SimilarRecipes";
 import { Ingredients } from "../components/Ingredients";
 import { Steps } from "../components/Steps";
+import { Tags } from "../components/Tags";
+import { MetaData } from "../components/MetaData";
 
 export const RecipePage = () => {
   const { recipeId } = useParams();
@@ -68,7 +70,13 @@ export const RecipePage = () => {
             </div>
           )}
         </div>
+        <MetaData
+          prepTime={recipe.prepTimeMinutes}
+          difficulty={recipe.difficulty}
+          servings={recipe.servings}
+        />
         <h1>{recipe.title}</h1>
+        <Tags tags={recipe.tags} />
         <p>{recipe.description}</p>
         <h3>רכיבים:</h3>
         <Ingredients ingredients={recipe.ingredients} />
