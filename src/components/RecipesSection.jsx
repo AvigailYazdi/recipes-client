@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { useGetAllRecipes } from "../hooks/useGetAllRecipes"
 import { NewRecipesGrid } from "./NewRecipesGrid";
 import { PopularCarousel } from "./PopularCarousel";
@@ -5,7 +6,7 @@ import { PopularCarousel } from "./PopularCarousel";
 export const RecipesSection = () => {
     const { data: recipes, isLoading, isError } = useGetAllRecipes();
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <CircularProgress />;
     if (isError) return <div>Error loading recipes</div>;
 
     return (

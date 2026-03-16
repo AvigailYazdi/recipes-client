@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const openAuthDialog = (mode) => {
     setDialogMode(mode);
@@ -41,6 +42,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (!savedToken) {
+      setIsLoading(false);
       return;
     }
     (async () => {
@@ -48,15 +50,29 @@ export const AuthProvider = ({ children }) => {
         const user = await getMe(savedToken);
         setUser(user);
         setToken(savedToken);
+        setIsLoading(false);
       } catch (e) {
         localStorage.removeItem("token");
         setUser(null);
         setToken(null);
+        setIsLoading(false);
       }
     })();
   }, []);
 
-  const value = { user, token, isDialogOpen, dialogMode, login, logout, isLoggedIn, isAdmin, openAuthDialog, closeAuthDialog };
+  const value = {
+    user,
+    token,
+    isDialogOpen,
+    dialogMode,
+    isLoading,
+    login,
+    logout,
+    isLoggedIn,
+    isAdmin,
+    openAuthDialog,
+    closeAuthDialog,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -35,24 +35,9 @@ export const RecipePage = () => {
     setActiveImg((prev) => (prev > 0 ? prev - 1 : recipe.images.length - 1));
   };
 
-  if (isLoading)
-    return (
-      <div>
-        <CircularProgress />
-      </div>
-    );
-  if (isError)
-    return (
-      <div>
-        <Alert severity="error">{error.message}</Alert>
-      </div>
-    );
-  if (!recipe)
-    return (
-      <div>
-        <Alert severity="info">No recipe found.</Alert>
-      </div>
-    );
+  if (isLoading) return <CircularProgress />;
+  if (isError) return <Alert severity="error">{error.message}</Alert>;
+  if (!recipe) return <Alert severity="info">No recipe found.</Alert>;
 
   return (
     <>
