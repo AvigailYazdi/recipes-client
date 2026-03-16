@@ -9,19 +9,8 @@ import { AuthDialog } from "./AuthDialog";
 import HomeIcon from '@mui/icons-material/Home';
 
 export const Navbar = () => {
-    const { user, isAdmin, logout } = useContext(AuthContext);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [dialogMode, setDialogMode] = useState(null);
+    const { user, isAdmin, logout, openAuthDialog } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    const handleLogIn = () => {
-        setIsDialogOpen(true);
-        setDialogMode("login");
-    }
-    const handleSignUp = () => {
-        setIsDialogOpen(true);
-        setDialogMode("signup");
-    }
     const handleNavigateAdmin = () => {
         navigate("/admin");
     }
@@ -34,8 +23,8 @@ export const Navbar = () => {
             <div className="navbar-details-div">
                 {user === null ?
                     <div className="navbar-right">
-                        <button className="system-connect-button" onClick={handleSignUp}>הרשמה</button>
-                        <button className="system-connect-button" onClick={handleLogIn}>התחברות</button>
+                        <button className="system-connect-button" onClick={()=>openAuthDialog("signup")}>הרשמה</button>
+                        <button className="system-connect-button" onClick={()=>openAuthDialog("login")}>התחברות</button>
                     </div>
                     :
                     <div className="navbar-right">
@@ -57,7 +46,7 @@ export const Navbar = () => {
                     </IconButton>
                 </div>
             </div>
-            <AuthDialog isOpen={isDialogOpen} mode={dialogMode} onCloseFunc={() => setIsDialogOpen(false)} />
+            <AuthDialog />
         </div>
     )
 }

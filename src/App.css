@@ -379,7 +379,7 @@ img {
 
 .add-comment-title{
     font-size: 19px;
-    margin-right: 42%;
+    margin-right: 41%;
 }
 
 .comment-text-area{
@@ -397,6 +397,44 @@ img {
     border: 1px solid rgba(0,0,0,0.12);
     outline: none;
     box-shadow: 0px 0px 3px rgba(0,0,0,0.08);
+}
+
+.comment-text-area:disabled{
+    cursor: not-allowed;
+}
+
+.send-comment-btn {
+  margin-right: 43%;
+  border: 1px solid #996666;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #996666;
+  height: 30px;
+  padding: 0 14px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s ease;
+}
+
+.send-comment-btn:hover {
+  background-color: #F1EBEB;
+}
+
+.send-comment-btn:disabled {
+  border: 1px solid #d7c4c4;
+  color: #d7c4c4;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.not-yet-connected{
+    margin-right: 25%;
+    font-size: 15px;
+}
+
+.not-yet-connected:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .similar-recipes-div{

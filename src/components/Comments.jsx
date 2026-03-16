@@ -7,6 +7,7 @@ import { useAddComment } from "../hooks/useAddComment";
 import { formatRelativeTime } from "../utils/dateUtils";
 
 export const Comments = (props) => {
+  const {openAuthDialog} = useContext(AuthContext);
   const { recipeId } = props;
   const [newComment, setNewComment] = useState("");
   const { token } = useContext(AuthContext);
@@ -53,12 +54,13 @@ export const Comments = (props) => {
             maxLength={800}
             placeholder="התגובה שלך"
             value={newComment}
+            disabled={token===null}
             onChange={(e) => setNewComment(e.target.value)}
           />
           {token === null ? (
-            <a>עוד לא מחובר? התחבר על מנת להוסיף תגובה</a>
+            <span className="not-yet-connected" onClick={()=>openAuthDialog("login")}>עוד לא מחובר? התחבר על מנת להוסיף תגובה</span>
           ) : (
-            <button onClick={handleSubmit} disabled={newComment.trim() === ""}>שלח תגובה</button>
+            <button className="send-comment-btn" onClick={handleSubmit} disabled={newComment.trim() === ""}>שלח תגובה</button>
           )}
         </div>
       )}

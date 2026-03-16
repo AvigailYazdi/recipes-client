@@ -1,17 +1,18 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLoginMutation } from "../hooks/useLoginMutation.js";
 import { useRegisterMutation } from "../hooks/useRegisterMutation.js";
+import { AuthContext } from "../context/AuthContext.js";
 
-export const AuthDialog = (props) => {
-    const { isOpen, mode, onCloseFunc } = props;
+export const AuthDialog = () => {
+    const { isDialogOpen, dialogMode, closeAuthDialog } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const { mutate: loginUser, error: loginError, reset: loginReset, isPending: isLoginPending } = useLoginMutation();
     const { mutate: registerUser, error: signupError, reset: signupReset, isPending: isSignupPending } = useRegisterMutation();
-    const error = mode === "login" ? loginError : signupError;
-    const isPending = mode === "login" ? isLoginPending : isSignupPending;
+    const error = dialogMode === "login" ? loginError : signupError;
+    const isPending = dialogMode === "login" ? isLoginPending : isSignupPending;
 
     const resetFields = () => {
         setEmail("");
@@ -23,20 +24,20 @@ export const AuthDialog = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        if (mode === "login") {
-            loginUser({ email, password }, { onSuccess: () => { resetFields(); onCloseFunc(); } });
+        if (dialogMode === "login") {
+            loginUser({ email, password }, { onSuccess: () => { resetFields(); closeAuthDialog(); } });
         }
         else {
-            registerUser({ name: userName, email, password }, { onSuccess: () => { resetFields(); onCloseFunc(); } })
+            registerUser({ name: userName, email, password }, { onSuccess: () => { resetFields(); closeAuthDialog(); } })
         }
     }
 
     return (
-        <Dialog className="dialog-auth" open={isOpen} onClose={() => { resetFields(); onCloseFunc(); }}>
-            <DialogTitle>{mode === "login" ? "התחברות" : "הרשמה"}</DialogTitle>
+        <Dialog className="dialog-auth" open={isDialogOpen} onClose={() => { resetFields(); closeAuthDialog(); }}>
+            <DialogTitle>{dialogMode === "login" ? "התחברות" : "הרשמה"}</DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit} id="auth-form">
-                    {mode === "signup" && <TextField
+                    {dialogMode === "signup" && <TextField
                         required
                         label="שם מתשתמש"
                         type="text"
@@ -68,10 +69,10 @@ export const AuthDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button type="submit" form="auth-form" disabled={isPending}>{isPending
-                    ? mode === "login"
+                    ? dialogMode === "login"
                         ? "מתחבר..."
                         : "נרשם..."
-                    : mode === "login"
+                    : dialogMode === "login"
                         ? "כניסה לאתר"
                         : "הרשמה לאתר"}</Button>
             </DialogActions>
