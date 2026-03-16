@@ -15,6 +15,7 @@ export const Steps = (props) => {
   };
   return (
     <div>
+      <h3>אופן ההכנה:</h3>
       {steps.map((section, index) => (
         <div key={index}>
           {section.title && <h4>{section.title}</h4>}

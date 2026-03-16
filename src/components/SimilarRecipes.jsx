@@ -12,7 +12,7 @@ export const SimilarRecipes = (props) => {
     data: similarRecipes = [],
     isLoading,
     isError,
-    error
+    error,
   } = useGetAllRecipes({ category });
 
   const filteredSimilarRecipes = similarRecipes.filter(
@@ -25,6 +25,7 @@ export const SimilarRecipes = (props) => {
 
   return (
     <div>
+      <h2 className="title-with-lines">מתכונים דומים</h2>
       {isLoading && <CircularProgress />}
       {isError && <Alert severity="error">{error.message}</Alert>}
 
@@ -37,6 +38,7 @@ export const SimilarRecipes = (props) => {
           {filteredSimilarRecipes.slice(0, 4).map((r) => (
             <div key={r._id} className="similar-recipe-card">
               <img src={r.images[0]} onClick={() => handleNavigate(r._id)} />
+              <span className="similar-recipe-title">{r.title}</span>
             </div>
           ))}
         </div>

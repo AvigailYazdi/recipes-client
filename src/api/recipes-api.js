@@ -1,3 +1,5 @@
+import { AddHomeWorkTwoTone } from "@mui/icons-material";
+
 export const getAllRecipes = async (filters = {}) => {
     const params = new URLSearchParams();
 
@@ -33,5 +35,12 @@ export const getRecipeById = async (recipeId, token) => {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || data.message || "Faild to get recipe.");
+    return data;
+}
+
+export const getRecipeComments = async(recipeId) =>{
+    const response = await fetch(`http://localhost:3000/api/recipes/comments/${recipeId}`);
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || data.message || "Faild to get recipe's comments.");
     return data;
 }

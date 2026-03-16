@@ -12,6 +12,7 @@ import { Ingredients } from "../components/Ingredients";
 import { Steps } from "../components/Steps";
 import { Tags } from "../components/Tags";
 import { MetaData } from "../components/MetaData";
+import { Comments } from "../components/Comments";
 
 export const RecipePage = () => {
   const { recipeId } = useParams();
@@ -78,11 +79,9 @@ export const RecipePage = () => {
         <h1>{recipe.title}</h1>
         <Tags tags={recipe.tags} />
         <p>{recipe.description}</p>
-        <h3>רכיבים:</h3>
         <Ingredients ingredients={recipe.ingredients} />
-        <h3>אופן ההכנה:</h3>
         <Steps steps={recipe.steps} />
-        <h2>מתכונים דומים:</h2>
+        <Comments recipeId={recipe._id}/>
         <SimilarRecipes category={category} recipeId={recipe._id} />
       </div>
     </>

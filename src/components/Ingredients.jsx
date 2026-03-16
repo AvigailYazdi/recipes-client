@@ -18,6 +18,7 @@ export const Ingredients = (props) => {
 
   return (
     <div>
+      <h3>רכיבים:</h3>
       {ingredients.map((section, index) => (
         <div key={index}>
           {section.title && <h4>{section.title}</h4>}
