@@ -60,7 +60,7 @@ export const Comments = (props) => {
           {token === null ? (
             <span className="not-yet-connected" onClick={()=>openAuthDialog("login")}>עוד לא מחובר? התחבר על מנת להוסיף תגובה</span>
           ) : (
-            <button className="send-comment-btn" onClick={handleSubmit} disabled={newComment.trim() === ""}>שלח תגובה</button>
+            <button className="btn send-comment-btn" onClick={handleSubmit} disabled={newComment.trim() === ""}>שלח תגובה</button>
           )}
         </div>
       )}

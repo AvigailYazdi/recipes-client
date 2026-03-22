@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
 
   const closeAuthDialog = () => {
     setIsDialogOpen(false);
-    setDialogMode(null);
   };
 
   const login = (user, token) => {

@@ -3,7 +3,7 @@
 }
 
 body {
-    margin-top: 0;
+    margin: 0;
     font-family: "Open Sans", Arial, sans-serif;
 }
 
@@ -11,7 +11,7 @@ img {
     object-fit: cover;
 }
 
-button{
+.btn{
   border: 0;
   background-color: transparent;
   color: #996666;
@@ -20,13 +20,13 @@ button{
   transition: background-color 0.2s ease;
 }
 
-button:disabled {
+.btn:disabled {
   color: #d7c4c4;
   background-color: transparent;
   cursor: not-allowed;
 }
 
-button:hover {
+.btn:hover {
   background-color: #F1EBEB;
 }
 
@@ -57,8 +57,7 @@ button:hover {
 .navbar-div {
     position: fixed;
     top: 0;
-    left: 8px;
-    right: 8px;
+    width: 100%;
     height: 9vh;
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.6)
@@ -69,7 +68,7 @@ button:hover {
     height: 100%;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 5px;
 }
 
 .navbar-details-div .iconBtn {
@@ -233,8 +232,16 @@ button:hover {
     text-align: right;
 }
 
+.dialog-content{
+    padding-bottom: 0px !important;
+}
+
+.dialog-actions{
+    justify-content: center !important;
+}
+
 .dialog-auth button {
-    width: 60%;
+    width: 30%;
     height: 40px;
     border-radius: 5px;
 }

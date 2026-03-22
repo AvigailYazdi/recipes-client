@@ -33,9 +33,9 @@ export const AuthDialog = () => {
     }
 
     return (
-        <Dialog className="dialog-auth" open={isDialogOpen} onClose={() => { resetFields(); closeAuthDialog(); }}>
+        <Dialog className="dialog-auth" maxWidth="xs" fullWidth open={isDialogOpen} onClose={() => { resetFields(); closeAuthDialog(); }}>
             <DialogTitle>{dialogMode === "login" ? "התחברות" : "הרשמה"}</DialogTitle>
-            <DialogContent>
+            <DialogContent className="dialog-content">
                 <form onSubmit={handleSubmit} id="auth-form">
                     {dialogMode === "signup" && <TextField
                         required
@@ -67,8 +67,8 @@ export const AuthDialog = () => {
                 </form>
                 {error && <Alert severity="error">{error.message}</Alert>}
             </DialogContent>
-            <DialogActions>
-                <Button type="submit" form="auth-form" disabled={isPending}>{isPending
+            <DialogActions className="dialog-actions">
+                <Button type="submit" form="auth-form" disabled={isPending} variant="contained">{isPending
                     ? dialogMode === "login"
                         ? "מתחבר..."
                         : "נרשם..."
