@@ -40,7 +40,7 @@ export const Comments = (props) => {
               <span className="comment-name">{comment.userId.name}</span>
               <div className="comment-date-div">
                 <AccessTimeIcon sx={{ fontSize: 13 }} />
-                <span className="comment-date">
+                <span className="date">
                   {formatRelativeTime(comment.createdAt)}
                 </span>
               </div>

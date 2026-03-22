@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router";
-import { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { CircularProgress, IconButton } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
@@ -19,27 +19,25 @@ export const Navbar = () => {
     navigate("/");
   };
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
+  if (isLoading) return <CircularProgress />;
 
   return (
     <div className="navbar-div">
       <div className="navbar-details-div">
         {user === null ? (
           <div className="navbar-right">
-            <button
-              className="system-connect-button"
+            <NavLink
+              className="system-connect-link"
               onClick={() => openAuthDialog("signup")}
             >
               הרשמה
-            </button>
-            <button
-              className="system-connect-button"
+            </NavLink>
+            <NavLink
+              className="system-connect-link"
               onClick={() => openAuthDialog("login")}
             >
               התחברות
-            </button>
+            </NavLink>
           </div>
         ) : (
           <div className="navbar-right">
