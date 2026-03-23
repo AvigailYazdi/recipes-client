@@ -9,8 +9,7 @@ import { AuthDialog } from "./AuthDialog";
 import HomeIcon from "@mui/icons-material/Home";
 
 export const Navbar = () => {
-  const { user, isAdmin, logout, isLoading, openAuthDialog } =
-    useContext(AuthContext);
+  const { user, isAdmin, logout, isLoading, openAuthDialog } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleNavigateAdmin = () => {
     navigate("/admin");

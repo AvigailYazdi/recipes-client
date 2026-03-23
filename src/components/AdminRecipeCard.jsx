@@ -4,14 +4,11 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 export const AdminRecipeCard = (props) => {
-  const { recipe } = props;
-  const editRecipe = (event) => {
-    event.stopPropagation();
-  }
+  const { recipe, openDialogFunc } = props;
 
-  const deleteRecipe = (event)=>{
+  const deleteRecipe = (event) => {
     event.stopPropagation();
-  }
+  };
 
   return (
     <RecipeCardBase recipe={recipe}>
@@ -20,7 +17,7 @@ export const AdminRecipeCard = (props) => {
         <button className="btn delete-btn" onClick={deleteRecipe}>
           <DeleteOutlineOutlinedIcon sx={{ fontSize: 20 }} />
         </button>
-        <button className="btn edit-btn" onClick={editRecipe}>
+        <button className="btn edit-btn" onClick={(event) => {event.stopPropagation(); openDialogFunc(recipe);}}>
           <EditOutlinedIcon sx={{ fontSize: 15 }} />
           <span>עריכת מתכון</span>
         </button>
