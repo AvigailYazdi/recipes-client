@@ -583,3 +583,60 @@ img {
     gap: 5px;
     font-size: 16px;
 }
+
+.categories-div{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.ingredients-div{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ingredients-section-div{
+    border-radius: 15px;
+    padding: 15px 5px 5px 15px;
+    background-color: #F9F9F9;
+}
+
+.ingredient-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 15px;
+    gap: 15px;
+}
+
+.ingredient-section-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.steps-div{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.steps-section-div{
+    border-radius: 15px;
+    padding: 15px 5px 5px 15px;
+    background-color: #F9F9F9;
+}
+
+.step-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 15px;
+    gap: 15px;
+}
+
+.step-section-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
