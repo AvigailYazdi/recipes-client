@@ -1,21 +1,13 @@
 import {
   Alert,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  TextField,
-  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { uploadImage } from "../api/cloudinary";
-import { Tooltip } from "@mui/material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { RecipeDialogStepsSection } from "./RecipeDialogStepsSection";
 import { RecipeDialogIngredientsSection } from "./RecipeDialogIngredientsSection";
 import { RecipeDialogBasicSection } from "./RecipeDialogBasicSection";
@@ -67,7 +59,7 @@ export const RecipeDialog = (props) => {
 
   const isEdit = dialogMode === "Edit";
   const [formData, setFormData] = useState(emptyRecipe);
-  const [images, setImages] = useState(null);
+  const [newImages, setNewImages] = useState([]);
   const difficultiesOptions = ["קל", "בינוני", "קשה"];
   const statusOptions = ["טיוטה", "פורסם"];
 
@@ -331,6 +323,30 @@ export const RecipeDialog = (props) => {
     return true;
   };
 
+  const cleanRecipe = (imageUrls) => {
+    return {
+      ...formData,
+      images: imageUrls,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      prepTimeMinutes: Number(formData.prepTimeMinutes),
+      servings: Number(formData.servings),
+      tags: formData.tags.map((tag) => tag.trim()).filter((tag) => tag !== ""),
+      ingredients: formData.ingredients.map((section) => ({
+        title: section.title.trim(),
+        items: section.items.map((item) => ({
+          name: item.name.trim(),
+          amount: item.amount?.trim() || "",
+          unit: item.unit?.trim() || "",
+        })),
+      })),
+      steps: formData.steps.map((section) => ({
+        title: section.title.trim(),
+        items: section.items.map((item) => item.trim()),
+      })),
+    };
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (formData.categories.length === 0) {
@@ -341,21 +357,25 @@ export const RecipeDialog = (props) => {
       setError("יש למלא שם לכל המרכיבים");
       return;
     }
-    if(!validateSteps()){
+    if (!validateSteps()) {
       setError("יש למלא את כל שלבי ההכנה");
       return;
     }
-    if (!images || images.length === 0) {
+    if (
+      (!newImages || newImages.length === 0) &&
+      formData.images.length === 0
+    ) {
       setError("יש להוסיף לכל הפחות תמונה אחת");
       return;
     }
     setError(null);
     const uploadPromises = [];
-    for (let img of images) {
+    for (let img of newImages) {
       uploadPromises.push(uploadImage(img));
     }
-    const imageUrls = await Promise.all(uploadPromises);
-    const updatedData = { ...formData, images: imageUrls };
+    const uploadedNewImageUrls = await Promise.all(uploadPromises);
+    const finalImageUrls = [...uploadedNewImageUrls, ...formData.images];
+    const updatedData = cleanRecipe(finalImageUrls);
     console.log(updatedData);
   };
 
@@ -411,7 +431,14 @@ export const RecipeDialog = (props) => {
             removeStepItem={removeStepItem}
             removeStepSection={removeStepSection}
           />
-          <RecipeDialogImagesSection setImages={setImages} />
+          <RecipeDialogImagesSection
+            existingImages={formData.images}
+            setExistingImages={(images) =>
+              setFormData((prev) => ({ ...prev, images }))
+            }
+            newImages={newImages}
+            setNewImages={setNewImages}
+          />
           {error && <Alert severity="error">{error}</Alert>}
         </form>
       </DialogContent>
