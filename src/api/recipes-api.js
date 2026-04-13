@@ -90,3 +90,21 @@ export const updateRecipe = async (recipeId, body, token) => {
     throw new Error(data.error || data.message || "Failed to update recipe.");
   return data;
 };
+
+export const deleteRecipe = async (recipeId, token) => {
+  const headers = {};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  const response = await fetch(
+    `http://localhost:3000/api/recipes/${recipeId}`,
+    {
+      method: "DELETE",
+      headers,
+    },
+  );
+  const data = await response.json();
+  if (!response.ok)
+    throw new Error(data.error || data.message || "Failed to delete recipe.");
+  return data;
+};
