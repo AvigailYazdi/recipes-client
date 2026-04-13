@@ -1,12 +1,13 @@
 import {
   Alert,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { uploadImage } from "../api/cloudinary";
 import { RecipeDialogStepsSection } from "./RecipeDialogStepsSection";
 import { RecipeDialogIngredientsSection } from "./RecipeDialogIngredientsSection";
@@ -14,6 +15,9 @@ import { RecipeDialogBasicSection } from "./RecipeDialogBasicSection";
 import { RecipeDialogTagsSection } from "./RecipeDialogTagsSection";
 import { RecipeDialogCategoriesSection } from "./RecipeDialogCategoriesSection";
 import { RecipeDialogImagesSection } from "./RecipeDialogImagesSection";
+import { useAddRecipeMutation } from "../hooks/useAddRecipeMutation";
+import { AuthContext } from "../context/AuthContext";
+import { useUpdateRecipeMutation } from "../hooks/useUpdateRecipeMutation";
 
 const allCategories = [
   "ארוחת בוקר",
@@ -31,12 +35,14 @@ const allCategories = [
 ];
 
 export const RecipeDialog = (props) => {
+  const { token } = useContext(AuthContext);
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { isDialogOpen, closeFunc, dialogMode, recipe } = props;
   const emptyRecipe = {
     title: "",
     description: "",
-    images: [""],
+    images: [],
     categories: [],
     prepTimeMinutes: "",
     difficulty: "קל",
@@ -62,10 +68,14 @@ export const RecipeDialog = (props) => {
   const [newImages, setNewImages] = useState([]);
   const difficultiesOptions = ["קל", "בינוני", "קשה"];
   const statusOptions = ["טיוטה", "פורסם"];
+  const { mutate: addRecipeMutation } = useAddRecipeMutation();
+  const { mutate: updateRecipeMutation } = useUpdateRecipeMutation(recipe?._id);
 
   const handleClose = () => {
+    if (isSubmitting) return;
     setFormData(emptyRecipe);
     setError(null);
+    setNewImages([]);
     closeFunc();
   };
 
@@ -368,25 +378,63 @@ export const RecipeDialog = (props) => {
       setError("יש להוסיף לכל הפחות תמונה אחת");
       return;
     }
+
     setError(null);
-    const uploadPromises = [];
-    for (let img of newImages) {
-      uploadPromises.push(uploadImage(img));
+    setIsSubmitting(true);
+    let uploadedNewImageUrls = [];
+    try {
+      const uploadPromises = [];
+      for (let img of newImages) {
+        uploadPromises.push(uploadImage(img));
+      }
+      uploadedNewImageUrls = await Promise.all(uploadPromises);
+    } catch (error) {
+      setError("שגיאה בהעלאת התמונות");
+      setIsSubmitting(false);
+      return;
     }
-    const uploadedNewImageUrls = await Promise.all(uploadPromises);
     const finalImageUrls = [...uploadedNewImageUrls, ...formData.images];
     const updatedData = cleanRecipe(finalImageUrls);
-    console.log(updatedData);
+    if (isEdit) {
+      updateRecipeMutation(
+        { body: updatedData, token },
+        {
+          onSuccess: () => {
+            setIsSubmitting(false);
+            handleClose();
+          },
+          onError: (error) => {
+            setError(error.message);
+            setIsSubmitting(false);
+          },
+        },
+      );
+    } else {
+      addRecipeMutation(
+        { body: updatedData, token },
+        {
+          onSuccess: () => {
+            setIsSubmitting(false);
+            handleClose();
+          },
+          onError: (error) => {
+            setError(error.message);
+            setIsSubmitting(false);
+          },
+        },
+      );
+    }
   };
 
   useEffect(() => {
     if (isDialogOpen) {
-      if (isEdit) {
+      if (isEdit && recipe) {
         setFormData(recipe);
       } else {
         setFormData(emptyRecipe);
-        setError(null);
       }
+      setError(null);
+      setNewImages([]);
     }
   }, [recipe, isDialogOpen, dialogMode]);
 
@@ -439,14 +487,27 @@ export const RecipeDialog = (props) => {
             newImages={newImages}
             setNewImages={setNewImages}
           />
-          {error && <Alert severity="error">{error}</Alert>}
+          {error && (
+            <Alert severity="error" className="recipe-form-alert">
+              {error}
+            </Alert>
+          )}
         </form>
       </DialogContent>
       <DialogActions>
-        <Button type="submit" form="recipe-form">
-          {dialogMode === "Add" ? "הוספה" : "אשר שינויים"}
+        <Button type="submit" form="recipe-form" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <CircularProgress size={18} sx={{ mr: 1 }} />
+              שומר...
+            </>
+          ) : dialogMode === "Add" ? (
+            "הוספה"
+          ) : (
+            "אשר שינויים"
+          )}
         </Button>
-        <Button onClick={handleClose}>ביטול</Button>
+        <Button onClick={handleClose} disabled={isSubmitting}>ביטול</Button>
       </DialogActions>
     </Dialog>
   );

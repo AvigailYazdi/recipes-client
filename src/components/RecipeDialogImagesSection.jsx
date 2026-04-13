@@ -1,5 +1,6 @@
 import { IconButton, Typography } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 
 export const RecipeDialogImagesSection = (props) => {
   const { existingImages, setExistingImages, newImages, setNewImages } = props;
@@ -37,14 +38,23 @@ export const RecipeDialogImagesSection = (props) => {
             </IconButton>
           </div>
         ))}
+        <input
+          id="recipe-images-input"
+          type="file"
+          multiple
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={(e) => {
+            setNewImages((prev) => [...prev, ...Array.from(e.target.files)]);
+            e.target.value = null;
+          }}
+        />
+        <label className="add-photo-icon" htmlFor="recipe-images-input">
+          <IconButton component="span">
+            <AddPhotoAlternateOutlinedIcon />
+          </IconButton>
+        </label>
       </div>
-      <input
-        required
-        type="file"
-        multiple
-        accept="image/*"
-        onChange={(e) => setNewImages(Array.from(e.target.files))}
-      />
     </div>
   );
 };
