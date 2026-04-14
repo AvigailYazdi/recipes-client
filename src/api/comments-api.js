@@ -30,3 +30,22 @@ export const getAllComments = async (token) => {
     throw new Error(data.error || data.message || "Failed to get all comments");
   return data;
 };
+
+export const addAdminReply = async (commentId, body, token) => {
+  const headers = { "Content-Type": "application/json" };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  const response = await fetch(
+    `http://localhost:3000/api/comments/reply/${commentId}`,
+    {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify(body),
+    },
+  );
+  const data = await response.json();
+  if (!response.ok)
+    throw new Error(data.error || data.message || "Failed to add admin reply");
+  return data;
+};
