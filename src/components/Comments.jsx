@@ -37,7 +37,7 @@ export const Comments = (props) => {
           <h2 className="title-with-lines">{comments.length} תגובות</h2>
           {comments.map((comment) => (
             <div className="comment-div" key={comment._id}>
-              <span className="comment-name">{comment.userId.name}</span>
+              <span className="comment-name">{comment.userId?.name || "משתמש"}</span>
               <div className="comment-date-div">
                 <AccessTimeIcon sx={{ fontSize: 13 }} />
                 <span className="date">

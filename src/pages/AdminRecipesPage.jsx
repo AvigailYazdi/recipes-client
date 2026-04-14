@@ -1,4 +1,4 @@
-import { Alert, CircularProgress } from "@mui/material";
+import { Alert, Button, CircularProgress } from "@mui/material";
 import { useGetAllRecipes } from "../hooks/useGetAllRecipes";
 import { AdminRecipeCard } from "../components/AdminRecipeCard";
 import { useState } from "react";
@@ -11,15 +11,15 @@ export const AdminRecipesPage = () => {
   const [recipeDialogMode, setRecipeDialogMode] = useState("Add");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  const closeFunc = ()=>{
+  const closeFunc = () => {
     setRecipeDialogOpen(false);
-  }
+  };
 
-  const openEditDialog = (recipe) =>{
+  const openEditDialog = (recipe) => {
     setSelectedRecipe(recipe);
     setRecipeDialogMode("Edit");
     setRecipeDialogOpen(true);
-  }
+  };
 
   if (isLoading) return <CircularProgress />;
   if (isError) return <Alert severity="error">{error.message}</Alert>;
@@ -27,15 +27,26 @@ export const AdminRecipesPage = () => {
   return (
     <div className="admin-recipe-page-div">
       <h2 className="title-with-lines">ניהול מתכונים</h2>
-      <div className="admin-recipe-controls">
-        <button onClick={()=>{setRecipeDialogOpen(true); setRecipeDialogMode("Add")}}>הוספת מתכון</button>
-      </div>
       <div className="admin-all-recipes-div">
+        <Button
+          className="add-recipe-btn"
+          onClick={() => {
+            setRecipeDialogOpen(true);
+            setRecipeDialogMode("Add");
+          }}
+        >
+          מתכון חדש +
+        </Button>
         {recipes.map((recipe) => (
-          <AdminRecipeCard recipe={recipe} openDialogFunc={openEditDialog}/>
+          <AdminRecipeCard recipe={recipe} openDialogFunc={openEditDialog} />
         ))}
       </div>
-      <RecipeDialog isDialogOpen={recipeDialogOpen} closeFunc={closeFunc} dialogMode={recipeDialogMode} recipe={selectedRecipe}/>
+      <RecipeDialog
+        isDialogOpen={recipeDialogOpen}
+        closeFunc={closeFunc}
+        dialogMode={recipeDialogMode}
+        recipe={selectedRecipe}
+      />
     </div>
   );
 };

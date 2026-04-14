@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    return user?.role === "admin";
+    return user?.role === "מנהל";
   };
 
   useEffect(() => {
