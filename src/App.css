@@ -381,10 +381,18 @@ img {
 }
 
 .comment-div{
-    gap:10px;
     display: flex;
     flex-direction: column;
-    margin: 15px 0;
+    margin: 10px 0;
+}
+
+.system-reply{
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
 }
 
 .comment-name{
@@ -400,6 +408,7 @@ img {
 
 .date{
     font-size: 13px;
+    margin-bottom: 8px;
 }
 
 .comment-text {
@@ -409,6 +418,11 @@ img {
 .add-comment-title{
     font-size: 19px;
     text-align: center;
+}
+
+.admin-reply-div{
+    margin-top: 13px;
+    padding-right: 3%;
 }
 
 .comment-text-area{
@@ -452,6 +466,7 @@ img {
 }
 
 .similar-recipes-div{
+    margin-bottom: 10px;
     display: flex;
     width: 100%;
     gap: 10px;
@@ -700,3 +715,4 @@ img {
     margin: auto;
     padding: 10px;
 }
+
