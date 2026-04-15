@@ -343,7 +343,7 @@ export const RecipeDialog = (props) => {
       servings: Number(formData.servings),
       tags: formData.tags.map((tag) => tag.trim()).filter((tag) => tag !== ""),
       ingredients: formData.ingredients.map((section) => ({
-        title: section.title.trim(),
+        title: section.title?.trim() || "",
         items: section.items.map((item) => ({
           name: item.name.trim(),
           amount: item.amount?.trim() || "",
@@ -351,8 +351,8 @@ export const RecipeDialog = (props) => {
         })),
       })),
       steps: formData.steps.map((section) => ({
-        title: section.title.trim(),
-        items: section.items.map((item) => item.trim()),
+        title: section.title?.trim() || "",
+        items: section.items.map((item) => item?.trim() || ""),
       })),
     };
   };
@@ -507,7 +507,9 @@ export const RecipeDialog = (props) => {
             "אשר שינויים"
           )}
         </Button>
-        <Button onClick={handleClose} disabled={isSubmitting}>ביטול</Button>
+        <Button onClick={handleClose} disabled={isSubmitting}>
+          ביטול
+        </Button>
       </DialogActions>
     </Dialog>
   );

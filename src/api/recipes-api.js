@@ -22,7 +22,6 @@ export const getAllRecipes = async (filters = {}) => {
   if (!response.ok) {
     throw new Error(data.error || data.message || "Failed to get recipes.");
   }
-
   return data;
 };
 

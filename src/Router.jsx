@@ -6,6 +6,7 @@ import { AdminLayout } from "./components/AdminLayout.jsx";
 import { AdminRecipesPage } from "./pages/AdminRecipesPage.jsx";
 import { AdminUsersPage } from "./pages/AdminUsersPage.jsx";
 import { AdminCommentsPage } from "./pages/AdminCommentsPage.jsx";
+import { AllRecipesPage } from "./pages/AllRecipesPage.jsx";
 
 export const Router = () => {
   const router = createBrowserRouter([
@@ -16,6 +17,10 @@ export const Router = () => {
     {
       path: "/recipes/:recipeId",
       Component: RecipePage,
+    },
+    {
+      path: "/recipes",
+      Component: AllRecipesPage,
     },
     {
       path: "/admin",

@@ -27,7 +27,7 @@ export const AdminRecipesPage = () => {
   return (
     <div className="admin-recipe-page-div">
       <h2 className="title-with-lines">ניהול מתכונים</h2>
-      <div className="admin-all-recipes-div">
+      <div className="all-recipes-div">
         <Button
           className="add-recipe-btn"
           onClick={() => {
