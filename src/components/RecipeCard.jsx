@@ -8,18 +8,11 @@ export const RecipeCard = (props) => {
   return (
     <RecipeCardBase recipe={recipe}>
       <div className="recipe-card-meta-data-div">
-        <div className="recipe-card-meta-data">
-          <QueryBuilderIcon sx={{fontSize: 18}}/>
-          <span>{recipe.prepTimeMinutes} דקות</span>
-        </div>
-        <div className="recipe-card-meta-data">
-          <SpeedIcon sx={{fontSize: 18}}/>
-          <span>{recipe.difficulty}</span>
-        </div>
-        <div className="recipe-card-meta-data">
-          <LocalDiningIcon sx={{fontSize: 18}}/>
-          <span>{recipe.servings} מנות</span>
-        </div>
+        <span>{recipe.prepTimeMinutes} דקות</span>
+        <span className="dividing-line">|</span>
+        <span>{recipe.difficulty}</span>
+        <span className="dividing-line">|</span>
+        <span>{recipe.servings} מנות</span>
       </div>
     </RecipeCardBase>
   );

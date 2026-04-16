@@ -3,7 +3,7 @@ import { useGetAllRecipes } from "../hooks/useGetAllRecipes";
 import { RecipeCard } from "../components/RecipeCard";
 import { Navbar } from "../components/Navbar";
 import { useNavigate, useSearchParams } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 export const AllRecipesPage = () => {
@@ -13,6 +13,7 @@ export const AllRecipesPage = () => {
   const filters = {
     q: searchParams.get("q") || "",
     category: searchParams.get("category") || "",
+    tag: searchParams.get("tag") || "",
     difficulty: searchParams.get("difficulty") || "",
     maxTime: searchParams.get("maxTime") || "",
     sort: searchParams.get("sort") || "",
@@ -26,6 +27,10 @@ export const AllRecipesPage = () => {
   } = useGetAllRecipes(filters);
 
   const [searchText, setSearchText] = useState(filters.q);
+
+  useEffect(() => {
+    setSearchText(filters.q || "");
+  }, [filters.q]);
 
   const handleSearch = () => {
     const trimmedSearch = searchText.trim();
