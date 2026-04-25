@@ -107,3 +107,13 @@ export const deleteRecipe = async (recipeId, token) => {
     throw new Error(data.error || data.message || "Failed to delete recipe.");
   return data;
 };
+
+export const getMaxPrepTime = async () => {
+  const response = await fetch("http://localhost:3000/api/recipes/max-prep-time");
+  const data = await response.json();
+  if (!response.ok)
+    throw new Error(
+      data.error || data.message || "Failed to fetch max prep time",
+    );
+  return data;
+};
