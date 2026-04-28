@@ -12,6 +12,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useGetMaxPrepTime } from "../hooks/useGetMaxPrepTime";
+import { useGetUserFavorites } from "../hooks/useGetUserFavorites";
 
 export const AllRecipesPage = () => {
   const [searchParams] = useSearchParams();
@@ -23,6 +24,9 @@ export const AllRecipesPage = () => {
     isError: isMaxPrepTimeError,
     error: maxPrepTimeError,
   } = useGetMaxPrepTime();
+
+  const { data: favorites = [] } = useGetUserFavorites();
+  const favoriteIds = favorites.map((recipe) => recipe._id);
 
   const sliderMax = Number(maxPrepTimeData?.maxPrepTime) || 0;
   const maxTimeParam = searchParams.get("maxTime");
@@ -218,7 +222,11 @@ export const AllRecipesPage = () => {
         </div>
         <div className="all-recipes-div">
           {allRecipes.map((recipe) => (
-            <RecipeCard key={recipe._id} recipe={recipe} />
+            <RecipeCard
+              key={recipe._id}
+              recipe={recipe}
+              isFavorite={favoriteIds.includes(recipe._id)}
+            />
           ))}
         </div>
       </div>

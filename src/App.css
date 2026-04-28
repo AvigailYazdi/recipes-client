@@ -608,6 +608,7 @@ img {
 }
 
 .recipe-card-div{
+    position: relative;
     padding: 5% 5% 0 5%;
     height: 43vh;
     border-radius: 12px;
@@ -637,6 +638,30 @@ img {
     margin: 0;
     font-size: 19px;
     font-weight: 600;
+}
+
+.favorite-icon-div {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.favorite-icon-div .favorite-icon-button ,
+.favorite-icon-div-similar .favorite-icon-button{
+  background-color: rgba(255,255,255,0.5);
+}
+
+.favorite-icon-div .favorite-icon-button:hover,
+.favorite-icon-div-similar .favorite-icon-button:hover {
+  background-color: rgba(255,255,255,0.7);
+}
+
+.favorite-icon-div-similar{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
 }
 
 .recipe-card-meta-data-div{

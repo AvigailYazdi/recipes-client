@@ -3,7 +3,7 @@ import { useGetSingleRecipe } from "../hooks/useGetSingleRecipe";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import { Navbar } from "../components/Navbar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { IconButton } from "@mui/material";
@@ -13,15 +13,28 @@ import { Steps } from "../components/Steps";
 import { Tags } from "../components/Tags";
 import { MetaData } from "../components/MetaData";
 import { Comments } from "../components/Comments";
+import { useGetUserFavorites } from "../hooks/useGetUserFavorites";
+import { useAddToFavoritesMutation } from "../hooks/useAddToFavoritesMutation";
+import { useRemoveFromFavoritesMutation } from "../hooks/useRemoveFromFavoritesMutation";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { AuthContext } from "../context/AuthContext";
 
 export const RecipePage = () => {
   const { recipeId } = useParams();
+  const { token } = useContext(AuthContext);
   const {
     data: recipe,
     isLoading,
     isError,
     error,
   } = useGetSingleRecipe(recipeId);
+
+  const { mutate: addToFavorites } = useAddToFavoritesMutation();
+  const { mutate: removeFromFavorites } = useRemoveFromFavoritesMutation();
+
+  const { data: favorites = [] } = useGetUserFavorites();
+  const isFavorite = favorites.map((recipe) => recipe._id).includes(recipeId);
 
   const category = recipe?.categories[0];
 
@@ -33,6 +46,16 @@ export const RecipePage = () => {
 
   const goPrev = () => {
     setActiveImg((prev) => (prev > 0 ? prev - 1 : recipe.images.length - 1));
+  };
+
+  const handleFavoriteClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (isFavorite) {
+      removeFromFavorites({ recipeId: recipe._id, token });
+    } else {
+      addToFavorites({ recipeId: recipe._id, token });
+    }
   };
 
   if (isLoading) return <CircularProgress />;
@@ -55,6 +78,20 @@ export const RecipePage = () => {
               </IconButton>
             </div>
           )}
+          {token && (
+            <div className="favorite-icon-div">
+              <IconButton
+                className="favorite-icon-button"
+                onClick={handleFavoriteClick}
+              >
+                {isFavorite ? (
+                  <FavoriteIcon sx={{ color: "#996666" }} />
+                ) : (
+                  <FavoriteBorderIcon />
+                )}
+              </IconButton>
+            </div>
+          )}
         </div>
         <MetaData
           prepTime={recipe.prepTimeMinutes}
@@ -66,7 +103,7 @@ export const RecipePage = () => {
         <p>{recipe.description}</p>
         <Ingredients ingredients={recipe.ingredients} />
         <Steps steps={recipe.steps} />
-        <Comments recipeId={recipe._id}/>
+        <Comments recipeId={recipe._id} />
         <SimilarRecipes category={category} recipeId={recipe._id} />
       </div>
     </>

@@ -109,11 +109,47 @@ export const deleteRecipe = async (recipeId, token) => {
 };
 
 export const getMaxPrepTime = async () => {
-  const response = await fetch("http://localhost:3000/api/recipes/max-prep-time");
+  const response = await fetch(
+    "http://localhost:3000/api/recipes/max-prep-time",
+  );
   const data = await response.json();
   if (!response.ok)
     throw new Error(
       data.error || data.message || "Failed to fetch max prep time",
     );
+  return data;
+};
+
+export const addToFavorites = async (recipeId, token) => {
+  const response = await fetch(
+    `http://localhost:3000/api/recipes/favorite/${recipeId}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || data.message || "Failed to add favorite");
+  }
+  return data;
+};
+
+export const removeFromFavorites = async (recipeId, token) => {
+  const response = await fetch(
+    `http://localhost:3000/api/recipes/favorite/${recipeId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || data.message || "Failed to remove favorite");
+  }
   return data;
 };

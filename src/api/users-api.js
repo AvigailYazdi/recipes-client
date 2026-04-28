@@ -85,3 +85,18 @@ export const deleteUser = async (userId, token) => {
     throw new Error(data.error || data.message || "Failed to delete user");
   return data;
 };
+
+export const getUserFavorites = async (token) => {
+  const headers = {};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  const response = await fetch("http://localhost:3000/api/users/favorites", {
+    method: "GET",
+    headers,
+  });
+  const data = await response.json();
+  if (!response.ok)
+    throw new Error(data.error || data.message || "Failed to get user's favorites");
+  return data;
+};
