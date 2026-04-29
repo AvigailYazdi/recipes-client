@@ -860,3 +860,37 @@ img {
     justify-content: start;
     width: 200px;
 }
+
+.drawer-div{
+    padding-top: 15px;
+    width: 310px;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-detalis-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-favorite-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
+}
+
+.favorite-list-item:hover .delete-favorite-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+.favorite-list-item:hover {
+  background-color: #F9F9F9;
+}
+
+.log-out{
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+}
