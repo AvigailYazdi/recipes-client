@@ -1,24 +1,28 @@
 import { AddHomeWorkTwoTone } from "@mui/icons-material";
 
-export const getAllRecipes = async (filters = {}) => {
+export const getAllRecipes = async (filters = {}, token) => {
   const params = new URLSearchParams();
-
   if (filters.category) params.append("category", filters.category);
   if (filters.difficulty) params.append("difficulty", filters.difficulty);
   if (filters.maxTime) params.append("maxTime", filters.maxTime);
   if (filters.q) params.append("q", filters.q);
   if (filters.sort) params.append("sort", filters.sort);
-
   if (filters.tag) {
     const tags = Array.isArray(filters.tag) ? filters.tag : [filters.tag];
     tags.forEach((tag) => params.append("tag", tag));
   }
-
+  const headers = {};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
   const response = await fetch(
     `http://localhost:3000/api/recipes?${params.toString()}`,
+    {
+      method: "GET",
+      headers,
+    },
   );
   const data = await response.json();
-
   if (!response.ok) {
     throw new Error(data.error || data.message || "Failed to get recipes.");
   }
@@ -145,7 +149,7 @@ export const removeFromFavorites = async (recipeId, token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   const data = await response.json();
   if (!response.ok) {

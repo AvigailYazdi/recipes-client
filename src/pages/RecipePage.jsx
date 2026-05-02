@@ -19,6 +19,7 @@ import { useRemoveFromFavoritesMutation } from "../hooks/useRemoveFromFavoritesM
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { AuthContext } from "../context/AuthContext";
+import { RecipeRating } from "../components/RecipeRating";
 
 export const RecipePage = () => {
   const { recipeId } = useParams();
@@ -103,6 +104,7 @@ export const RecipePage = () => {
         <p>{recipe.description}</p>
         <Ingredients ingredients={recipe.ingredients} />
         <Steps steps={recipe.steps} />
+        <RecipeRating recipeId={recipe._id} />
         <Comments recipeId={recipe._id} />
         <SimilarRecipes category={category} recipeId={recipe._id} />
       </div>
