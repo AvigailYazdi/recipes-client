@@ -1,6 +1,6 @@
 export const getRecipeRating = async (recipeId) => {
   const response = await fetch(
-    `http://localhost:3000/api/recipes/rating/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/rating/${recipeId}`,
   );
   const data = await response.json();
   if (!response.ok)
@@ -16,7 +16,7 @@ export const rateRecipe = async ({ recipeId, value, token }) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/recipes/rating/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/rating/${recipeId}`,
     {
       method: "POST",
       headers,
@@ -35,7 +35,7 @@ export const getMyRecipeRating = async ({ recipeId, token }) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/recipes/my-rating/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/my-rating/${recipeId}`,
     {
       method: "GET",
       headers,

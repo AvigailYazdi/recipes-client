@@ -1,5 +1,5 @@
 export const loginUser = async (body) => {
-  const response = await fetch("http://localhost:3000/api/users/login", {
+  const response = await fetch("https://recipes-server-dq0m.onrender.com/api/users/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -11,7 +11,7 @@ export const loginUser = async (body) => {
 };
 
 export const registerUser = async (body) => {
-  const response = await fetch("http://localhost:3000/api/users/register", {
+  const response = await fetch("https://recipes-server-dq0m.onrender.com/api/users/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -23,7 +23,7 @@ export const registerUser = async (body) => {
 };
 
 export const getMe = async (token) => {
-  const response = await fetch("http://localhost:3000/api/users/me", {
+  const response = await fetch("https://recipes-server-dq0m.onrender.com/api/users/me", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ export const getAllUsers = async (token) => {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
-  const response = await fetch("http://localhost:3000/api/users", {
+  const response = await fetch("https://recipes-server-dq0m.onrender.com/api/users", {
     method: "GET",
     headers,
   });
@@ -56,7 +56,7 @@ export const changeRole = async (userId, body, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/users/role/${userId}`,
+    `https://recipes-server-dq0m.onrender.com/api/users/role/${userId}`,
     {
       method: "PATCH",
       headers,
@@ -76,7 +76,7 @@ export const deleteUser = async (userId, token) => {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
-  const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+  const response = await fetch(`https://recipes-server-dq0m.onrender.com/api/users/${userId}`, {
     method: "DELETE",
     headers,
   });
@@ -91,7 +91,7 @@ export const getUserFavorites = async (token) => {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
-  const response = await fetch("http://localhost:3000/api/users/favorites", {
+  const response = await fetch("https://recipes-server-dq0m.onrender.com/api/users/favorites", {
     method: "GET",
     headers,
   });

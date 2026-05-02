@@ -16,7 +16,7 @@ export const getAllRecipes = async (filters = {}, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/recipes?${params.toString()}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes?${params.toString()}`,
     {
       method: "GET",
       headers,
@@ -35,7 +35,7 @@ export const getRecipeById = async (recipeId, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/recipes/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/${recipeId}`,
     {
       method: "GET",
       headers,
@@ -49,7 +49,7 @@ export const getRecipeById = async (recipeId, token) => {
 
 export const getRecipeComments = async (recipeId) => {
   const response = await fetch(
-    `http://localhost:3000/api/recipes/comments/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/comments/${recipeId}`,
   );
   const data = await response.json();
   if (!response.ok)
@@ -64,7 +64,7 @@ export const addRecipe = async (body, token) => {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
-  const response = await fetch(`http://localhost:3000/api/recipes`, {
+  const response = await fetch(`https://recipes-server-dq0m.onrender.com/api/recipes`, {
     method: "POST",
     headers,
     body: JSON.stringify(body),
@@ -81,7 +81,7 @@ export const updateRecipe = async (recipeId, body, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/recipes/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/${recipeId}`,
     {
       method: "PUT",
       headers,
@@ -100,7 +100,7 @@ export const deleteRecipe = async (recipeId, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/recipes/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/${recipeId}`,
     {
       method: "DELETE",
       headers,
@@ -114,7 +114,7 @@ export const deleteRecipe = async (recipeId, token) => {
 
 export const getMaxPrepTime = async () => {
   const response = await fetch(
-    "http://localhost:3000/api/recipes/max-prep-time",
+    "https://recipes-server-dq0m.onrender.com/api/recipes/max-prep-time",
   );
   const data = await response.json();
   if (!response.ok)
@@ -126,7 +126,7 @@ export const getMaxPrepTime = async () => {
 
 export const addToFavorites = async (recipeId, token) => {
   const response = await fetch(
-    `http://localhost:3000/api/recipes/favorite/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/favorite/${recipeId}`,
     {
       method: "POST",
       headers: {
@@ -143,7 +143,7 @@ export const addToFavorites = async (recipeId, token) => {
 
 export const removeFromFavorites = async (recipeId, token) => {
   const response = await fetch(
-    `http://localhost:3000/api/recipes/favorite/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/favorite/${recipeId}`,
     {
       method: "DELETE",
       headers: {

@@ -1,6 +1,6 @@
 export const addComment = async (recipeId, token, body) => {
   const response = await fetch(
-    `http://localhost:3000/api/recipes/comments/${recipeId}`,
+    `https://recipes-server-dq0m.onrender.com/api/recipes/comments/${recipeId}`,
     {
       method: "POST",
       headers: {
@@ -21,7 +21,7 @@ export const getAllComments = async (token) => {
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
-  const response = await fetch("http://localhost:3000/api/comments", {
+  const response = await fetch("https://recipes-server-dq0m.onrender.com/api/comments", {
     method: "GET",
     headers,
   });
@@ -37,7 +37,7 @@ export const addAdminReply = async (commentId, body, token) => {
     headers.Authorization = `Bearer ${token}`;
   }
   const response = await fetch(
-    `http://localhost:3000/api/comments/reply/${commentId}`,
+    `https://recipes-server-dq0m.onrender.com/api/comments/reply/${commentId}`,
     {
       method: "PATCH",
       headers,
